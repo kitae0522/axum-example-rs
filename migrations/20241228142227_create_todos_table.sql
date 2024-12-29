@@ -1,6 +1,8 @@
 -- Add migration script here
-CREATE TABLE IF NOT EXISTS todos (
-    id VARCHAR(255) PRIMARY KEY,
-    text TEXT NOT NULL,
-    completed BOOLEAN NOT NULL
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL,
+    email TEXT NOT NULL,
+    password TEXT NOT NULL
 );
