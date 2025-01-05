@@ -11,7 +11,7 @@ pub struct RequestLogin {
 
 #[derive(Deserialize, Serialize)]
 pub struct ResponseLogin {
-    pub id: i64,
+    pub id: String,
     pub email: String,
 }
 
