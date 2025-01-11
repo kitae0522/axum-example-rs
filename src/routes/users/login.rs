@@ -21,7 +21,7 @@ pub async fn login(
 }
 
 async fn login_impl(db_pool: &SqlitePool, payload: &RequestLogin) -> Result<ResponseLogin, AppError> {
-    let user = queries::user::find_user_by_email(db_pool, payload.email.clone()).await.unwrap();
+    let user = queries::user::get_user_by_email(db_pool, payload.email.clone()).await.unwrap();
     verify_login_password(&user.hash_password, &payload.password.clone())?;
     Ok(ResponseLogin { id: user.id, email: user.email })
 }

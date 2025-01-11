@@ -23,6 +23,23 @@ pub struct RequestRegister {
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct ResponseRegister {
-    
+pub struct ResponseRegister {}
+
+#[derive(Deserialize, Serialize)]
+pub struct RequestCreateProfile {
+    pub id: String,
+    pub name: String,
+    pub handle: String,
+    pub profile_pic_url: String,
+    pub bio: String,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct ResponseCreateProfile {
+    pub id: String,
+    pub email: String,
+    pub name: String,
+    pub handle: String,
+    pub profile_pic_url: String,
+    pub bio: String,
 }

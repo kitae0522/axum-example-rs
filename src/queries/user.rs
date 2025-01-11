@@ -3,7 +3,22 @@ use sqlx::Error;
 
 use super::User;
 
-pub async fn find_user_by_email(
+pub async fn get_user_by_id(
+    db_pool: &SqlitePool,
+    id: String,
+) -> Result<User, Error> {
+    let user = sqlx::query_as::<_, User>("SELECT * FROM users WHERE id = $1 AND is_deleted = FALSE")
+        .bind(id)
+        .fetch_optional(db_pool)
+        .await?;
+
+    match user {
+        Some(u) => Ok(u),
+        None => Err(Error::RowNotFound),
+    }
+}
+
+pub async fn get_user_by_email(
     db_pool: &SqlitePool,
     email: String,
 ) -> Result<User, Error> {
@@ -25,7 +40,7 @@ pub async fn list_users(
         .fetch_all(db_pool)
         .await?;
 
-    return Ok(users);
+    Ok(users)
 }
 
 pub async fn create_user(
@@ -58,7 +73,7 @@ pub async fn update_user_profile(
         .rows_affected();
 
     if affected_rows >= 1 {
-        let user = sqlx::query_as::<_, User>("SELECT id, name, handle, profile_pic_url, bio FROM users WHERE id = $1")
+        let user = sqlx::query_as::<_, User>("SELECT id, email, name, handle, profile_pic_url, bio FROM users WHERE id = $1")
             .bind(id)
             .fetch_one(db_pool)
             .await?;
